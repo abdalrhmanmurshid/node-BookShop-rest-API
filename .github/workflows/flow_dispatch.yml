@@ -5,4 +5,4 @@ jobs:
 deploy:
 runs-on: ubuntu-latest
 steps:
-run: echo "We did the thing!"
+run: npm install

@@ -1,0 +1,41 @@
+{
+  "name": "bookshop-rest-api",
+  "version": "1.0.0",
+  "description": "Bookshop Resteful APIs ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha 'test' --timeout 10000",
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdalrhmanmurshid/node-BookShop-rest-API.git"
+  },
+  "keywords": [
+    "Bookshop",
+    "Mock",
+    "APIs",
+    "Demo"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdalrhmanmurshid/node-BookShop-rest-API/issues"
+  },
+  "homepage": "https://github.com/abdalrhmanmurshid/node-BookShop-rest-API#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+     "bcryptjs": "^2.4.3",
+    "config": "^3.2.2",
+    "express-validator": "^6.2.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.4"
+  }
+}

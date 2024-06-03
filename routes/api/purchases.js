@@ -146,7 +146,7 @@ router.delete('/:purchaseId', auth, async (req, res) => {
       });
     }
 
-    let purchaseId = req.params.purchaseId;
+    let purchaseId = req.query.purchaseId;
 
     const purchase = await Purchase.findOne({
       _id: purchaseId,

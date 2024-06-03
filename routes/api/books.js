@@ -122,7 +122,7 @@ router.post(
 // @access Private
 router.patch('/:bookId', auth, async (req, res) => {
   try {
-    let bookId = req.params.bookId;
+    let bookId = req.query.bookId;
     const book = await Book.findById(bookId).select('-stock');
     if (!book) {
       return res
@@ -152,7 +152,7 @@ router.patch('/:bookId', auth, async (req, res) => {
 // @access Private
 router.delete('/:bookId', auth, async (req, res) => {
   try {
-    let bookId = req.params.bookId;
+    let bookId = req.query.bookId;
     const book = await Book.findById(bookId).select('-stock');
     if (!book) {
       return res

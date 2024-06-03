@@ -7,204 +7,848 @@
 	},
 	"item": [
 		{
-			"name": "localhost:3000/api/users/register",
-			"event": [
+			"name": "Admin Test",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Set token\", function () {\r",
-							" var jsonData = pm.response.json();\r",
-							" console.log(jsonData.token); \r",
-							"pm.collectionVariables.set(\"token\", jsonData.token);\r",
-							"});\r",
-							" "
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "admin-signup-key",
-						"value": "1"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n \"name\":\"Abdalrhman05\",\r\n \"email\":\"abdal112388@gmail.com\",\r\n \"password\":\"P@ssw0rd123\"\r\n }",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "localhost:3000/api/users/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set token\", function () {\r",
+									" var jsonData = pm.response.json();\r",
+									" console.log(jsonData.token); \r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);\r",
+									"});\r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "admin-signup-key",
+								"value": "1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"name\":\"Admin01\",\r\n \"email\":\"abdal123@gmail.com\",\r\n \"password\":\"P@ssw0rd123\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:3000/api/users/register",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"users",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:3000/api/books",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/api/books",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"books"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create new book",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Set bookId\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    console.log(jsonData._id);\r",
-							"pm.collectionVariables.set(\"bookId\", jsonData._id);\r",
-							"});\r",
-							"   "
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\":\"124 Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":150,\r\n     \"stock\":45\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "localhost:3000/api/books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:3000/api/books",
-					"host": [
-						"localhost"
+				{
+					"name": "Create new book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set bookId\", function () {\r",
+									"    var res = pm.response.json();\r",
+									"pm.environment.set(\"Book_ID\", res.newBook._id);\r",
+									"   console.log(pm.environment.get(\"Book_ID\"));\r",
+									"pm.collectionVariables.set(\"bookId\", res.newBook._id);\r",
+									"   console.log(\"bookId \"+pm.collectionVariables.get(\"bookId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"set title\", function(){\r",
+									"pm.collectionVariables.set(\"title\", res.newBook.title);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
 					],
-					"port": "3000",
-					"path": [
-						"api",
-						"books"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"The Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":100,\r\n     \"stock\":50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book By title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books?bookId=6658c34a2fe8bd1af4075d3b",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "6658c34a2fe8bd1af4075d3b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set bookId\", function () {\r",
+									"    var res = pm.response.json();\r",
+									"pm.environment.set(\"Book_ID\", res.newBook._id);\r",
+									"   console.log(pm.environment.get(\"Book_ID\"));\r",
+									"pm.collectionVariables.set(\"bookId\", res.newBook._id);\r",
+									"   console.log(\"bookId \"+pm.collectionVariables.get(\"bookId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"set title\", function(){\r",
+									"pm.collectionVariables.set(\"title\", res.newBook.title);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"44f3d The Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":100,\r\n     \"stock\":20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases/DELETE?purchaseId={{PurchaceID}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases",
+								"DELETE"
+							],
+							"query": [
+								{
+									"key": "purchaseId",
+									"value": "{{PurchaceID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete book Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Successfully deleted the book\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books/delete?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "localhost:3000/api/purchases?bookId=ObjectId('6657932e4bad5c4f80fe8745')",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{token}}"
-					}
-				],
-				"url": {
-					"raw": "localhost:3000/api/purchases?bookId={{BookID}}",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"purchases"
-					],
-					"query": [
+			"name": "Normal user Test",
+			"item": [
+				{
+					"name": "localhost:3000/api/users/register",
+					"event": [
 						{
-							"key": "bookId",
-							"value": "{{BookID}}"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set token\", function () {\r",
+									" var jsonData = pm.response.json();\r",
+									" console.log(jsonData.token); \r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);\r",
+									"});\r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:3000/api/books?bookId=6658c34a2fe8bd1af4075d3b",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/api/books?bookId=6658c34a2fe8bd1af4075d3b",
-					"host": [
-						"localhost"
 					],
-					"port": "3000",
-					"path": [
-						"api",
-						"books"
-					],
-					"query": [
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "admin-signup-key",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"name\":\"Admin01\",\r\n \"email\":\"abdal123@gmail.com\",\r\n \"password\":\"P@ssw0rd123\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new book",
+					"event": [
 						{
-							"key": "bookId",
-							"value": "6658c34a2fe8bd1af4075d3b"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:3000/api/books?bookId=6658c34a2fe8bd1af4075d3b Copy 2",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/api/books?bookId=6658c34a2fe8bd1af4075d3b",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"books"
-					],
-					"query": [
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Only admin\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
 						{
-							"key": "bookId",
-							"value": "6658c34a2fe8bd1af4075d3b"
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					]
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Normal user input The Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":100,\r\n     \"stock\":20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Only admin\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"44f3d The Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":100,\r\n     \"stock\":20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books/PATCH?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"PATCH"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set PurchaceID\", function () {\r",
+									"    var res = pm.response.json();\r",
+									"   pm.collectionVariables.set(\"PurchaceID\", res.newPurchase._id);\r",
+									"   console.log(\"PurchaceID \"+pm.collectionVariables.get(\"PurchaceID\"));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases?bookId={{bookId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases?purchaseId={{PurchaceID}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases"
+							],
+							"query": [
+								{
+									"key": "purchaseId",
+									"value": "{{PurchaceID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/purchases/DELETE?purchaseId={{PurchaceID}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"purchases",
+								"DELETE"
+							],
+							"query": [
+								{
+									"key": "purchaseId",
+									"value": "{{PurchaceID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set bookId\", function () {\r",
+									"    var res = pm.response.json();\r",
+									"pm.environment.set(\"Book_ID\", res.newBook._id);\r",
+									"   console.log(pm.environment.get(\"Book_ID\"));\r",
+									"pm.collectionVariables.set(\"bookId\", res.newBook._id);\r",
+									"   console.log(\"bookId \"+pm.collectionVariables.get(\"bookId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"set title\", function(){\r",
+									"pm.collectionVariables.set(\"title\", res.newBook.title);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"44f3d The Rich Dad Poor Dad speacial edition\",\r\n    \"description\":\" What The Rich Teach Their Kids About Money That The Poor And Middle Class Do Not!\" , \r\n    \"price\":100,\r\n     \"stock\":20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/books",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
 			"name": "localhost:3000/api/users/",
@@ -250,6 +894,14 @@
 		},
 		{
 			"key": "bookId",
+			"value": ""
+		},
+		{
+			"key": "Book_ID",
+			"value": ""
+		},
+		{
+			"key": "PurchaceID",
 			"value": ""
 		}
 	]

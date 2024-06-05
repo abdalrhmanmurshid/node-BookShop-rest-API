@@ -7,24 +7,25 @@ chai.use(http);
 
 // import User and Book model
 const Book = require('../models/Book');
+const { request } = require('express');
 
-// describe('Books basic tests', () => {
-//   before(done => {
-//     Book.find()
-//       .deleteMany()
-//       .then(res => {
-//         console.log('Books removed');
-//         done();
-//       })
-//       .catch(err => {
-//         console.log(err.message);
-//       });
-//   });
+describe('Books basic tests', () => {
+  before(done => {
+    Book.find()
+      .deleteMany()
+      .then(res => {
+        console.log('Books removed');
+        done();
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  });
 
-//   it('Should exists', () => {
-//     expect(app).to.be.a('function');
-//   });
-// });
+  it('Should exists', () => {
+    expect(app).to.be.a('function');
+  });
+});
 
 describe('Add a book', () => {
   it('/api/books should return 200 if everything is correct', done => {
@@ -73,7 +74,7 @@ describe('Add a book', () => {
       email: 'abdal1123@gmail.com',
       password: 'P@ssw0rd123'
     };
-    //send login request to the app to receive token
+    //send login request to the app to receive token@
     chai
       .request(app)
       .post('/api/users/login')
@@ -114,17 +115,17 @@ describe('Add a book', () => {
 });
 
 describe('Delete a book', () => {
-  // before(done => {
-  //   Book.find()
-  //     .deleteMany()
-  //     .then(res => {
-  //       console.log('Books removed');
-  //       done();
-  //     })
-  //     .catch(err => {
-  //       console.log(err.message);
-  //     });
-  // });
+  before(done => {
+    Book.find()
+      .deleteMany()
+      .then(res => {
+        console.log('Books removed');
+        done();
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  });
   it('/api/books should return 200 if book is deleted', done => {
     //mock login to get token
     const valid_input = {
@@ -139,6 +140,7 @@ describe('Delete a book', () => {
       .then(login_response => {
         //add token to next request Authorization headers as adw3R£$4wF43F3waf4G34fwf3wc232!w1C"3F3VR
         const token = login_response.body.token;
+        
         const book_detail = {
           title: 'Ten days of Solitude',
           description: 'Ten days of Solitude is an awesome book',
@@ -152,10 +154,11 @@ describe('Delete a book', () => {
           .send(book_detail)
           .then(book_response => {
             // get book id
-            const bookId = book_response.body.newBook._id;
+           
+            const bookId = book_response.body.newBook._id ;
             chai
               .request(app)
-              //.delete(`/api/books/${bookId}`)
+              .delete(`/api/books/${bookId}`)
               .set('x-auth-token', token)
               .then(res => {
                 expect(res).to.have.status(200);

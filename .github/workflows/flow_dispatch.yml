@@ -1,5 +1,6 @@
  name: Basic Workflow Dispatch Example
-on:
+on: push
+branches: -"*"
 workflow_dispatch:
 jobs:
 deploy:
